@@ -1,6 +1,6 @@
 <?php
 
-namespace ItsPixStore\Database;
+namespace ItsPixStore\Framework\Database;
 
 class Database
 {

@@ -61,7 +61,7 @@ class ComposerStaticInit20a9cff0cb00b21bcb2d151675555ac3
         ),
         'ItsPixStore\\' => 
         array (
-            0 => __DIR__ . '/..' . '/itspixstore',
+            0 => __DIR__ . '/..' . '/ItsPixStore/Framework',
         ),
         'GrahamCampbell\\ResultType\\' => 
         array (
