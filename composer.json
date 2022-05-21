@@ -10,5 +10,8 @@
         "files": [
             "App/Helpers/Helper.php"
         ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
     }
 }
