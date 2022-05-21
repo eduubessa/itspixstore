@@ -1,0 +1,23 @@
+{
+  "name": "itspixstore",
+  "version": "1.0.0",
+  "description": "Mini loja online desenvolvido em livestream (twitch.tv/eduubessa)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "loja",
+    "online",
+    "eduubessa",
+    "twitch",
+    "iniciante",
+    "php",
+    "desenvolvimento",
+    "web",
+    "aplicacao",
+    "javascript"
+  ],
+  "author": "Eduardo Bessa <eduubessa@gmail.com>",
+  "license": "ISC"
+}
