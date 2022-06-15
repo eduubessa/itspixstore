@@ -14,8 +14,7 @@ if(file_exists(__DIR__ . '/../vendor/autoload.php')) {
 
 $database = new Database();
 
-$database->insert([
-    'name' => 'test',
-    'email' => 'eduubessa@gmail.com',
-    'level' => 1
-]);
+$database->table('users')
+    ->select()
+    ->where('username', 'eduubessa')
+    ->get();

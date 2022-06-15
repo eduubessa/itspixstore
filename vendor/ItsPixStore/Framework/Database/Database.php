@@ -6,15 +6,16 @@ class Database
 {
 
     private $driver = 'mysql'; // default driver
-    private $port = 3307; // default port
+    private $port = 3306; // default port
     private $host = "localhost"; // default host
-    private $username = "admin"; // default username
-    private $password = "ganhwL36zdJWDbBr"; // default password
+    private $username = "root"; // default username
+    private $password = "Vush@w123"; // default password
     private $dbname = "itspixstoredev"; // default database name
 
     private $connection = null; // database connection
     private $table = null; // table name
     private $columns = null; // columns
+    private $data = []; // data (columns and values)
     private $sql = null; // sql query
 
     /**
@@ -25,8 +26,11 @@ class Database
     public function __construct()
     {
         try {
-            $this->connection = new \PDO("$this->driver:host=$this->host;port=$this->port;dbname=$this->dbname", $this->username, $this->password);
-        } catch (Exception $e) {
+            $this->connection = new \PDO("$this->driver:host=$this->host;port=$this->port;", $this->username, $this->password);
+            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->connection->query("CREATE DATABASE IF NOT EXISTS $this->dbname");
+            $this->connection->query("USE $this->dbname");
+        } catch (\PDOException $e) {
             echo $e->getMessage();
         }
     }
@@ -82,15 +86,18 @@ class Database
             if (str_contains($this->sql, "WHERE")) {
                 $this->sql .= " AND $args[0] ";
             } else {
-                $this->sql .= " WHERE $args[0] ";
+                $this->sql .= " WHERE $args[0] "
+                ;
             }
 
+
             if (count($args) === 3) {
-                $this->sql .= " $args[1] ";
-                $this->sql .= is_integer($args[2]) ? "$args[2]" : "'$args[2]'";
+                $this->sql .= "$args[1] :$args[0]";
+                $this->data = array_merge($this->data, [$args[0] => $args[2]]);
 
             } elseif (count($args) === 2) {
-                $this->sql .= is_integer($args[1]) ? " = $args[1]" : " LIKE '$args[1]'";
+                $this->sql .= is_integer($args[1]) ? "= :$args[0]" : "LIKE :$args[0]";
+                $this->data = array_merge($this->data, [$args[0] => $args[1]]);
             } else {
                 throw new \Exception("Invalid arguments");
             }
@@ -343,6 +350,18 @@ class Database
     public function get()
     {
         $this->sql .= ";";
-        echo $this->sql;
+
+        $stmt = $this->connection->prepare($this->sql);
+
+        if(is_array($this->data) && count($this->data) > 0){
+            foreach($this->data as $column => $value){
+                $stmt->bindValue($column, $value);
+            }
+        }
+
+        $stmt->execute();
+
+        echo json_encode($stmt->fetchAll());
+        die();
     }
 }
