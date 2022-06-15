@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use ItsPixStore\Config\Config;
 use ItsPixStore\Database\Database;
 
@@ -11,10 +12,9 @@ if(file_exists(__DIR__ . '/../vendor/autoload.php')) {
     require_once __DIR__ . '/../vendor/autoload.php';
 }
 
+$users = User::get();
 
-$database = new Database();
-
-$database->table('users')
-    ->select()
-    ->where('username', 'eduubessa')
-    ->get();
+foreach($users as $user)
+{
+    echo $user->username . '<br>';
+}

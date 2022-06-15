@@ -347,7 +347,7 @@ class Database
         }
     }
 
-    public function get()
+    public function get() : array
     {
         $this->sql .= ";";
 
@@ -361,7 +361,6 @@ class Database
 
         $stmt->execute();
 
-        echo json_encode($stmt->fetchAll());
-        die();
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 }
